@@ -16,6 +16,11 @@ export function setupTodoUI() {
 
             addnewtoDo(title, description, dueDate, priority)
         })
+
+        const showTodosButton = document.querySelector("#show-todos");
+        showTodosButton.addEventListener("click", () => {
+        toggleTodosVisibility();
+    });
     }
 
 
@@ -47,6 +52,18 @@ function addnewtoDo (title, description, dueDate, priority) {
         alert(warnings.join("\n"));
         return;
     } 
+
+    const isDuplicate = thetoDoList.todos.some(todo => 
+        todo.title === title && 
+        todo.description === description && 
+        todo.dueDate === dueDate && 
+        todo.priority === priority
+    );
+    if (isDuplicate) {
+        alert("A todo with the same details already exists.");
+        return;
+    }
+
     else {
         thetoDoList.addToDo(title, description, dueDate, priority)
         updateUIDisplay();  
@@ -54,31 +71,51 @@ function addnewtoDo (title, description, dueDate, priority) {
 }
 
 
+let isTodosVisible = true; 
 function updateUIDisplay() {
     const big_container = document.querySelector("#todo-container");
-    big_container.innerHTML = "";
+    
+    if (isTodosVisible) {
+        big_container.innerHTML = ""; 
 
-    thetoDoList.todos.forEach(todo  => {
-        const tododiv = document.createElement("div");
-        tododiv.classList.add("todo-item");
+        thetoDoList.todos.forEach(todo => {
+            const tododiv = document.createElement("div");
+            tododiv.classList.add("todo-item");
 
-        tododiv.innerHTML = `
-        <h3>Title: ${todo.title}</h3>
-        <p>Description: ${todo.description}</p>
-        <p>Date: ${todo.dueDate}</p>
-        <p>Priority: ${todo.priority} </p>
-        `;
-        
-        const deletebtn = document.createElement("button")
-        deletebtn.textContent = "Delete"
+            tododiv.innerHTML = `
+            <h3>Title: ${todo.title}</h3>
+            <p><strong>Description</strong>: ${todo.description}</p>
+            <p><strong>Date</strong>: ${todo.dueDate}</p>
+            <p><strong>Priority</strong>: ${todo.priority} </p>
+            `;
+            
+            const deletebtn = document.createElement("button")
+            deletebtn.className = "deletebtn"
+            deletebtn.textContent = "Delete"
 
-        deletebtn.addEventListener("click", () => {
-            thetoDoList.deleteToDo(todo.title);
-            updateUIDisplay();
+            deletebtn.addEventListener("click", () => {
+                thetoDoList.deleteToDo(todo.title);
+                updateUIDisplay(); 
+            });
+
+            tododiv.appendChild(deletebtn);
+            big_container.appendChild(tododiv);
         });
+    } else {
+        big_container.innerHTML = "";
 
-        tododiv.appendChild(deletebtn)
-        big_container.appendChild(tododiv)
-        
-    });
+    }
+}
+
+
+function toggleTodosVisibility() {
+    isTodosVisible = !isTodosVisible;
+    updateUIDisplay();
+
+    const showbtn = document.querySelector("#show-todos");
+    if (isTodosVisible) {
+        showbtn.textContent = "Hide todos";
+    } else {
+        showbtn.textContent = "Show todos";
+    }
 }

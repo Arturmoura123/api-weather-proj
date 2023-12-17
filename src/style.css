@@ -15,7 +15,7 @@ body {
 }
 
 
-div {
+.todolayout {
   display: flex;
   flex-direction: column;
 
@@ -41,7 +41,7 @@ select {
 }
 
 
-button {
+#add-toDo {
   background-color: #28a745;
   color: white;
   border: none;
@@ -54,10 +54,42 @@ button {
 }
 
 
+.deletebtn {
+  background-color: orangered;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+.deletebtn:hover {
+  background-color: red;
+}
+
+
 button:hover {
   background-color: #218838;
 }
 
+
+#show-todos {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 300px;
+}
 
 
 main {
@@ -66,21 +98,26 @@ main {
   width: 100%;
 }
 
-.todo-container {
-  background-color: #fff;
-  padding: 10px;
-  margin: 20px 0; 
-  border-radius: 4px;
-  width: 80%; 
-  max-width: 600px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .todo-item {
+  display: flex;
+  flex-direction: column;
   background-color: #f8f9fa;
-  border: 1px solid #ddd;
+  border: 3px solid black;
   border-radius: 4px;
   text-align: start; 
-  align-self: center;
-  width: 90%;
+  align-items: start;
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+
+.todo-container {
+  background-color: transparent;
+  padding: 0;
+  margin: 20px 0;
+  width: 80%; 
+  max-width: 600px; 
+
 }
