@@ -17,6 +17,7 @@
     <div class="todolayout">
         <input type="text" id="todo-title" placeholder="Title">
         <textarea id="todo-description" placeholder="Description"></textarea>
+        <input type="text" id="todo-tag" placeholder="Tag (optional)">
         <input type="date" id="todo-dueDate">
         <select id="todo-priority">
             <option value="High">High</option>
@@ -25,8 +26,15 @@
         </select>
         <button id="add-toDo">Add</button>
     </div>
-    <button id="show-todos">Hide Todos</button> 
-
+    
+    <div class="search-layout">
+        <button id="show-todos">Hide Todos</button>
+        <div class="search-tag-layout">
+            <input type="text" id="search-tag" placeholder="Search by Tag">
+            <button id="search-tag-btn">Search</button>
+        </div>
+    </div>
+    
 
 
 
@@ -34,6 +42,10 @@
     <main>
         <div id="todo-container">
 
+        </div>
+
+        <div id="search-results-container">
+            
         </div>
     </main>
 

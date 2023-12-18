@@ -1,7 +1,8 @@
 export class toDo {
-    constructor(title, description, dueDate, priority) {
+    constructor(title, description, tag, dueDate, priority) {
         this.title = title;
         this.description = description;
+        this.tag = tag
         this.dueDate = dueDate;
         this.priority = priority;
     }
@@ -14,8 +15,8 @@ export class toDoList {
     }
 
 
-    addToDo(title, description, dueDate, priority){
-        const new_todo = new toDo(title, description, dueDate, priority);
+    addToDo(title, description, tag, dueDate, priority){
+        const new_todo = new toDo(title, description, tag, dueDate, priority);
         this.todos.push(new_todo)
         return new_todo
     }
