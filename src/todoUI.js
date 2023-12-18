@@ -1,4 +1,4 @@
-import {toDo, toDoList} from "./todoLogic.js"
+import {toDoList} from "./todoLogic.js"
 
 
 const thetoDoList = new toDoList() 
@@ -11,21 +11,56 @@ export function setupTodoUI() {
         addbutton.addEventListener("click", () => {
             const title = document.querySelector("#todo-title").value;
             const description = document.querySelector("#todo-description").value;
+            const tag = document.querySelector("#todo-tag").value
             const dueDate = document.querySelector("#todo-dueDate").value;
             const priority = document.querySelector("#todo-priority").value;      
 
-            addnewtoDo(title, description, dueDate, priority)
+            addnewtoDo(title, description, tag, dueDate, priority)
         })
 
         const showTodosButton = document.querySelector("#show-todos");
         showTodosButton.addEventListener("click", () => {
         toggleTodosVisibility();
-    });
+        });
+
+       const searchTagButton = document.querySelector("#search-tag-btn");
+       searchTagButton.addEventListener("click", () => {
+       const tag_value = document.querySelector("#search-tag").value;
+       displayFilteredTodos(tag_value);
+       });
+}
+
+
+function displayFilteredTodos(tag_value) {
+    const searchResultsContainer = document.querySelector("#search-results-container");
+    searchResultsContainer.innerHTML = "";
+
+    if(tag_value) {
+        let filteredTodos = thetoDoList.todos.filter(todo => todo.tag === tag_value);
+        filteredTodos.forEach(todo => {
+            const todoDiv = searchTodoDiv(todo);
+            searchResultsContainer.appendChild(todoDiv)
+        })
     }
+}
+
+function searchTodoDiv(todo) {
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("searched-item");
+
+    todoDiv.innerHTML = `
+        <h3>${todo.title}</h3>
+        <p><strong>Description</strong>: ${todo.description}</p>
+        <p><strong>Tag</strong>: ${todo.tag}</p>
+        <p><strong>Date</strong>: ${todo.dueDate}</p>
+        <p><strong>Priority</strong>: ${todo.priority}</p>
+    `;
+
+    return todoDiv;
+}
 
 
-
-function addnewtoDo (title, description, dueDate, priority) {
+function addnewtoDo (title, description, tag, dueDate, priority) {
     let warnings = []
     let isFieldMissing = false
 
@@ -65,7 +100,7 @@ function addnewtoDo (title, description, dueDate, priority) {
     }
 
     else {
-        thetoDoList.addToDo(title, description, dueDate, priority)
+        thetoDoList.addToDo(title, description, tag, dueDate, priority)
         updateUIDisplay();  
     }
 }
@@ -83,8 +118,9 @@ function updateUIDisplay() {
             tododiv.classList.add("todo-item");
 
             tododiv.innerHTML = `
-            <h3>Title: ${todo.title}</h3>
+            <h3>${todo.title}</h3>
             <p><strong>Description</strong>: ${todo.description}</p>
+            <p><strong>Tag</strong>: ${todo.tag}</p>
             <p><strong>Date</strong>: ${todo.dueDate}</p>
             <p><strong>Priority</strong>: ${todo.priority} </p>
             `;
